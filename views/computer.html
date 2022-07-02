@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer | Whot</title>
+    <link rel="stylesheet" href="./css/whot.css">
+    <link rel="stylesheet" href="./vendor/toastr/build/toastr.min.css">
+    <link rel="shortcut icon" href="./img/favicon.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="./vendor/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="./vendor/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="./vendor/slick/slick/slick.css">
+    
+</head>
+<body class="gamebody">
+    <!-- Preloader-->
+    <span class="spinner-border spinner-border-lg text-white loader fa-spin" id="loader"></span>
+
+    <!-- Before Game-->
+    <div class="overlay" id="settings">
+        <div class="card">
+            <center>
+                <img src="./img/favicon.jpg" class="logo">
+                <h2 style="color:#2a2b2d;margin-bottom:10px">Game Settings</h2>
+             </center>
+             <center>
+                <select class="form-control form-control-lg" onchange="setSharedCards(this.value)">
+                    <option value="">Select Number of shared cards</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                </select>
+             </center>
+           
+            <div class="padded-top">
+               <button class="widget w-red" onclick="startGame()">Start Game</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card Selection-->
+    <div class="card-selection" id="card-selection">
+        <div class="card">
+            <center>
+                <h2 style="color:#2a2b2d;margin-bottom:10px">Choose Card</h2>
+             </center>
+             <div class="flex-right">
+                <div class="square" onclick="selectShape('circle')">
+                    <i class="fa fa-circle text-danger fa-4x" onclick="selectShape('circle')"></i>
+                </div>
+                <div class="square" onclick="selectShape('cross')">
+                    <i class="fa fa-cross text-danger fa-4x" onclick="selectShape('cross')"></i>
+                </div>
+                <div class="square" onclick="selectShape('square')">
+                    <i class="fa fa-square text-danger fa-4x" onclick="selectShape('square')"></i>
+                </div>
+             </div>
+             <div class="flex-right padded-top">
+                <div class="square" onclick="selectShape('star')">
+                    <i class="fa fa-star text-danger fa-4x" onclick="selectShape('star')"></i>
+                </div>
+                <div class="square" onclick="selectShape('triangle')">
+                    <i class="fa fa-exclamation-triangle text-danger fa-4x" onclick="selectShape('triangle')"></i>
+                </div>
+             </div>
+        </div>
+    </div>
+
+    <!-- Game ended-->
+    <div class="overlay" id="gameover">
+        <div class="card">
+            <center>
+                <h2 id="game-ended">GAME OVER!</h2>
+                <br/>
+                <div class="padded-top">
+                    <a href="./computer">
+                        <button class="widget w-blue">Replay</button>
+                    </a>
+                </div>
+                <div class="padded-top">
+                    <a href="/">
+                        <button class="widget w-red">Exit</button>
+                    </a>
+                </div>
+            </center>
+        </div>
+    </div>
+
+    <!-- Options menu-->
+    <div class="dropdown" id="dropdown">
+        <span>Music <input type="checkbox" onchange="setOption('music')" class="right" id="music" checked/> </span>
+        <div class="padded-top"></div>
+        <span>Speak Aloud <input onchange="setOption('speech')" type="checkbox" class="right" id="speech" checked/></span>
+        <div class="padded-top"></div>
+        <span onclick="endGame('end')">End Game <i class="fa fa-sign-out-alt right"></i> </span>
+        <div class="padded-top"></div>
+    </div>
+    
+
+    <!-- Game area-->
+    <div id="main">
+        <div class="container container-fluid">
+            <i class="fa fa-cog fa-2x options text-dark" onclick="toggleOptionsMenu()"></i>
+            <div class="score-board">
+                <center>
+                    <div class="padded-top">
+                        <span class="statistics">Games Played: <span id="played"></span></span>
+                    </div>
+                    <div class="padded-top">
+                        <span class="statistics">Games Won: <span id="won"></span></span>
+                    </div>
+                    <div class="padded-top">
+                        <span class="statistics">Win Percentage: <span id="percent"></span></span>
+                    </div>
+                </center>
+               
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+                    <div class="game-flex">
+                        <div class="padded-top">
+                            <center class="text-bold" id="computer-count"></center>
+                        </div>
+                        <div class="computer-area" id="computer"></div>
+                        <div class="padded-top"></div>
+                        <div class="gameplay-area">
+                            <div id="market">
+                                <img src="./cards/cover.jpg" class="game-card" onclick="gotoMarket('player')"/>
+                                <center class="text-bold" id="market-count"></center>
+                            </div>
+                            <span style="padding-left : 20px;"></span>
+                            <div id="played-cards"> </div>
+                        </div>
+                        <div class="padded-top">
+                            <center class="text-bold" id="player-count"></center>
+                        </div>
+                        <div class="player-area" id="player"> </div>
+                        
+                    </div>
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+        </div>
+    </div>
+    <script src="./vendor/jquery/jquery-3.0.0.js"></script>
+    <script src="./js/whot.js"></script>
+    <script src="./js/computer.js"></script>
+    <script src="./vendor/fontawesome/js/all.min.js"></script>
+    <script src="./vendor/slick/slick/slick.min.js"></script>
+    <script src="./vendor/toastr/build/toastr.min.js"></script>
+    <script>
+        $(".player-area").slick({
+            // normal options...
+            infinite: false,
+            dots : false,
+
+            // the magic
+            responsive: [
+                {breakpoint: 3000,settings: {slidesToShow: 5}},
+                {breakpoint: 1024,settings: {slidesToShow: 4}}, 
+                {breakpoint: 600,settings: {slidesToShow: 3}}, 
+                {breakpoint: 300, settings: "unslick" /* destroys slick*/}
+            ]
+        });
+    </script>
+</body>
+</html>
