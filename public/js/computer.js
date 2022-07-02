@@ -1,5 +1,5 @@
 //variables
-const background = new Audio("../sounds/background.mp3")
+const background = new Audio("https://whot.cyclic.app/sounds/background.mp3")
 background.loop = true
 background.volume = 0.5
 const special = [1,4,7,8,20]
